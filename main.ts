@@ -2,7 +2,6 @@ import { encoder } from "./encoder"
 import { read } from "./utils/read";
 import { ABI } from "./ABI";
 import { Account, Contract, Provider, constants, ec, number, transaction, uint256 } from "starknet";
-import axios from 'axios'
 import { config } from "./config";
 
 function getRandomInteger(data: number[]) {
