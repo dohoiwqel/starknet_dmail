@@ -3,8 +3,10 @@ import { read } from "./utils/read";
 import { ABI } from "./ABI";
 import { Account, Contract, Provider, constants, ec, number, transaction, uint256 } from "starknet";
 import axios from 'axios'
+import { config } from "./config";
 
-function getRandomInteger(min: number, max: number) {
+function getRandomInteger(data: number[]) {
+    const [min, max] = data
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
@@ -52,8 +54,8 @@ async function main() {
             const contract = new Contract(ABI, contractAddress)        
             contract.connect(account)
         
-            const email = encoder(`${generateRandomWord(10)}@gmail.com`)
-            const text = encoder(`${generateRandomWord(5)}`)
+            const email = encoder(`${generateRandomWord(config.mail_length)}@gmail.com`)
+            const text = encoder(`${generateRandomWord(config.text_length)}`)
     
             try {
                 const res = await contract.transaction(email, text)
@@ -62,7 +64,7 @@ async function main() {
                 console.log(`FAILED | ${e} | ${account.address}`)
             }
         })()
-        await sleep(getRandomInteger(1, 5))
+        await sleep(getRandomInteger(config.delay))
     }
 }
 
